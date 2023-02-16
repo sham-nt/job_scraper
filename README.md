@@ -1,5 +1,5 @@
 # Job listings Web-scrapper 
-                  using Python, BeautifulSoup4
+                  using Python, BeautifulSoup4 & selenium
 ---
 ## About
 The internet is filled with sites with many job hunting sites, and many of them contain a lot of fluff which is not relevant to the average job-seeker

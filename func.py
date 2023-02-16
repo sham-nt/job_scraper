@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 import requests
 import time
 
@@ -18,33 +19,51 @@ def find_job1(search_skill,unfamiliar_skill):
              company_name = job.find('h3', class_ = "joblist-comp-name").text.replace(' ','').strip()
              skills = list(job.find('span', class_ = "srp-skills").text.replace(' ','').strip().split(','))
              more_info = job.header.h2.a['href']
+             job_title = job.header.h2.a.text.strip()
              if(all(x not in skills for x in unfamiliar_skill)): 
                  with open('jobs_list.txt','a') as f:
                     f.write(f'Company Name: {company_name}\n')
+                    f.write(f'Role: {job_title}\n')
                     f.write(f'Skills: {skills}\n')
                     f.write(f'More info: {more_info}\n')
+                    f.write("Scrapped from TimesJobs...\n")
                     f.write('\n\n')
-    print(f"Successfully fetched results without filter...")
+    print("Successfully fetched results from Timesjobs...")
     
     
 def find_job2(known,unknown):
-    driver = webdriver.Chrome("/Users/sham/chromedriver/chrome_driver") #Enter the path to chromedrive in your local system
+    driver = webdriver.Chrome("/Users/sham/chromedriver/chrome_driver") # Enter the path to chromedrive in your local system
     url = f"https://www.naukri.com/{known}-jobs?"
     driver.get(url)
-    time.sleep(3)
+    time.sleep(7)
     soup = BeautifulSoup(driver.page_source,'lxml')
-    print(soup.prettify())
     driver.close()
-    # job = soup.find('article', class_ = "jobTuple")
-    
-    
+    jobs = soup.find_all('article', class_ = "jobTuple")
+    for job in jobs:
+        company_name = job.find('a',class_="subTitle ellipsis fleft").text.replace(' ','').strip()
+        job_title = job.find('a',"title ellipsis").text.strip()
+        more_info = job.div.div.a['href']
+        skills_div = job.find_all('li',class_='fleft dot')
+        skills = []
+        for skill in skills_div:
+            skills.append(skill.text.strip())
+        if(all(x not in skills for x in unknown)): 
+            with open('jobs_list.txt','a') as f:
+                f.write(f'Company Name: {company_name}\n')
+                f.write(f'Role: {job_title}\n')
+                f.write(f'Skills: {skills}\n')
+                f.write(f'More info: {more_info}\n')
+                f.write("Scrapped from Naukri.com...\n")
+                f.write('\n\n')
+    print("Successfully fetched results from Naukri.com...")
     
 def find_job3(known,unknown):
-    driver = webdriver.Chrome("/Users/sham/chromedriver/chrome_driver") #Enter the path to chromedrive in your local system
+    driver = webdriver.Chrome("/Users/sham/chromedriver/chrome_driver") # Enter the path to chromedrive in your local system
     url = f"https://in.indeed.com/jobs?q={known}&l=&from=searchOnHP"
     driver.get(url)
     time.sleep(3)
     soup = BeautifulSoup(driver.page_source,'lxml')
-    print(soup.prettify())
+    job = soup.find("table",class_="jobCard_mainContent big6_visualChanges")
+    print(job.text)
     driver.close()
     

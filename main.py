@@ -6,6 +6,7 @@ Created by : @sham-nt (Shamanth Kashyap)
 '''
 import time
 from func import *
+
 def main():
     print("Enter the Programming language or skill you are familiar with: ")
     search_skill = input('>')
@@ -13,10 +14,11 @@ def main():
     unfamiliar_skill = list(input('>').split(" "))
     print('\n\n')
     while True:
-        find_job2(search_skill, unfamiliar_skill)
-        time.sleep(5)
-        find_job3(search_skill, unfamiliar_skill)
         time_wait = 10
+        find_job1(search_skill, unfamiliar_skill)
+        time.sleep(3)
+        find_job2(search_skill, unfamiliar_skill)
+        find_job3(search_skill, unfamiliar_skill)
         print(f"Waiting every {time_wait} minutes...")
         time.sleep(time_wait * 60)
         
