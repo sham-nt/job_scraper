@@ -15,10 +15,9 @@ def main():
     print('\n\n')
     while True:
         time_wait = 10
-        find_job1(search_skill, unfamiliar_skill)
-        time.sleep(3)
-        find_job2(search_skill, unfamiliar_skill)
-        find_job3(search_skill, unfamiliar_skill)
+        #find_job1(search_skill, unfamiliar_skill)
+        #find_job2(search_skill, unfamiliar_skill)
+        find_job3(search_skill)
         print(f"Waiting every {time_wait} minutes...")
         time.sleep(time_wait * 60)
         

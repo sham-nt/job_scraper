@@ -57,13 +57,27 @@ def find_job2(known,unknown):
                 f.write('\n\n')
     print("Successfully fetched results from Naukri.com...")
     
-def find_job3(known,unknown):
+def find_job3(known):
     driver = webdriver.Chrome("/Users/sham/chromedriver/chrome_driver") # Enter the path to chromedrive in your local system
     url = f"https://in.indeed.com/jobs?q={known}&l=&from=searchOnHP"
     driver.get(url)
     time.sleep(3)
     soup = BeautifulSoup(driver.page_source,'lxml')
-    job = soup.find("table",class_="jobCard_mainContent big6_visualChanges")
-    print(job.text)
+    jobs = soup.find_all("td",class_="resultContent")
     driver.close()
+    for job in jobs:
+        job_title = job.find("h2",class_="jobTitle css-1h4a4n5 eu4oa1w0").a.text.strip()
+        more_info = job.find("h2",class_="jobTitle css-1h4a4n5 eu4oa1w0").a['href']
+        company_name = job.find("span",class_="companyName").text.replace(" ","").strip()
+        
+        with open('jobs_list.txt','a') as f:
+                f.write(f'Company Name: {company_name}\n')
+                f.write(f'Role: {job_title}\n')
+                f.write(f'Skills: Check the bellow link\n')
+                f.write(f'More info: {more_info}\n')
+                f.write("Scrapped from indeed.com...\n")
+                f.write('\n\n')
+    print("Successfully fetched results from Naukri.com...")
+    
+       
     

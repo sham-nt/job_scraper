@@ -35,7 +35,7 @@ If u want to setup this project in your local system
 ## Roadmap to project
 
 1) Build initial implementation for **Timesjobs.com**  ✅
-2) complete the implementation of **Naukri.com** and **indeed.com**
+2) complete the implementation of **Naukri.com** ✅
 3) Store the scrapped data in a database
 4) build a front end for viewing the data 
 5) fetch the data to the front end in realtime
